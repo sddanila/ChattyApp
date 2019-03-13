@@ -6,16 +6,20 @@ import data from './Messages.json';
 import {generateRandomId} from '../utils.js';
 import { IncomingMessage } from 'http';
 
-
+const socket = new WebSocket('ws://localhost:3001');
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = ({
-      messages: data.messages,
-      currentUser: data.currentUser.name,
+      messages: [],
+      currentUser: 'Anonymous'
     });
-    this.addNewMessage = this.addNewMessage.bind(this)
+    
+    this.componentDidMount = this.componentDidMount.bind(this);
+    // this.addNewMessage = this.addNewMessage.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
+    this.addCurrentUser = this.addCurrentUser.bind(this);
   }
   // componentDidMount(){
   //   console.log("componentDidMount <App/>")
@@ -34,17 +38,44 @@ class App extends Component {
   //   }, 3000);
   // }
 
-  addNewMessage(msg){
-    const oldMessages = this.state.messages;
-    const newMessage = {
-      id: generateRandomId(),
+  
+  componentDidMount(){
+    const parent = this;
+    socket.onopen = function(event) {
+      console.log('Connected to client');
+    };
+    socket.onmessage = function(event){
+      let oldMessages = parent.state.messages;
+      let newMessage = JSON.parse(event.data);
+      let newMessages = oldMessages.concat(newMessage);
+      parent.setState({messages: newMessages});
+    }
+  }
+
+  sendMessage(msg){
+    const message = {
       type: 'incomingMessage',
       username: this.state.currentUser,
       content: msg
     }
-    const newMessages = [...oldMessages, newMessage];
-    this.setState({messages: newMessages})
+    socket.send(JSON.stringify(message));
   }
+
+  addCurrentUser(name){
+    this.setState({currentUser: name});
+  }
+
+  // addNewMessage(msg){
+  //   const oldMessages = this.state.messages;
+  //   const newMessage = {
+  //     type: 'incomingMessage',
+  //     username: this.state.currentUser,
+  //     content: msg
+  //   }
+  //   const newMessages = [...oldMessages, newMessage];
+  //   this.setState({messages: newMessages})
+  // }
+
 
 
   render() {
@@ -52,7 +83,7 @@ class App extends Component {
       <div>
         <NavBar />
         <Messages messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser} addNewMessage={this.addNewMessage}/>
+        <ChatBar currentUser={this.state.currentUser} addCurrentUser={this.addCurrentUser} addNewMessage={this.addNewMessage} sendMessage={this.sendMessage}/>
       </div>
 
     );
