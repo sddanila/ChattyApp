@@ -5,6 +5,7 @@ import NavBar from './NavBar.jsx';
 import data from './Messages.json';
 import {generateRandomId} from '../utils.js';
 import { IncomingMessage } from 'http';
+import { isNumber } from 'util';
 
 const socket = new WebSocket('ws://localhost:3001');
 
@@ -13,7 +14,8 @@ class App extends Component {
     super(props);
     this.state = ({
       messages: [],
-      currentUser: 'Anonymous'
+      currentUser: 'Anonymous',
+      onlineUsers: 0
     });
     
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -46,8 +48,11 @@ class App extends Component {
       console.log('Connected to client');
     };
     socket.onmessage = function(event){
-      console.log(event.data);
+      console.log(event);
       let incoming = JSON.parse(event.data);
+      if(isNumber(incoming)){
+        parent.setState({onlineUsers: incoming});
+      }
       let oldMessages = parent.state.messages;
       switch(incoming.type){
         case "incomingMessage":
@@ -98,7 +103,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar onlineUsers={this.state.onlineUsers}/>
         <Messages messages={this.state.messages}/>
         <ChatBar 
           currentUser={this.state.currentUser} 

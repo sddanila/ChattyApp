@@ -3,7 +3,8 @@ h1 {
 }
 
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700");
-    @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
 
     body {
       background: white;
@@ -69,6 +70,9 @@ h1 {
     }
 
     .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background: tomato;
       border-bottom: 1px solid black;
       height: 60px;
@@ -82,11 +86,11 @@ h1 {
     .navbar-brand {
       color: inherit;
       display: block;
-      float: left;
       font-weight: 700;
       font-size: 28px;
       height: 60px;
       line-height: 60px;
       padding: 0 10px;
       text-decoration: none;
+      font-family: 'Pacifico', cursive;
     }
