@@ -50,5 +50,4 @@ This project is licensed under the LHL License
 
 ## App Flow
 
-* ChatApp SPA
 !["ChatApp SPA"](https://github.com/sddanila/ChattyApp/blob/master/docs/chattyAppGiphy.gif?raw=true)
