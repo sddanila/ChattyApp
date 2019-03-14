@@ -2,12 +2,16 @@ import React, {Component} from 'react';
 
 export default class Message extends Component {
   render(){
-
-    const messages = this.props.messages.map((message) => {
+    const messages = this.props.messages.map((message, index) => {
+      let alternatingColor = '#ffffff';
+      let userColor = message.color;
+        if (index % 2 !== 0){
+          alternatingColor = '#DCDCDC';
+        };
         if (message.type === 'incomingMessage'){
           return (
-            <div className="message" key={message.id}>
-              <span className="message-username">{message.username}</span>
+            <div style={{backgroundColor: alternatingColor}} className="message" key={message.id}>
+              <span className="message-username" style={{color: userColor}}>{message.username}</span>
               <span className="message-content">{message.content}</span>
             </div>
           )

@@ -50,8 +50,8 @@ class App extends Component {
     socket.onmessage = function(event){
       console.log(event);
       let incoming = JSON.parse(event.data);
-      if(isNumber(incoming)){
-        parent.setState({onlineUsers: incoming});
+      if(isNumber(incoming.counter)){
+        parent.setState({onlineUsers: incoming.counter});
       }
       let oldMessages = parent.state.messages;
       switch(incoming.type){
