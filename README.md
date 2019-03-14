@@ -50,5 +50,5 @@ This project is licensed under the LHL License
 
 ## App Flow
 
-* Chat Page
-!["Chat Page"](https://github.com/sddanila/TinyApp/blob/master/docs/welcome_page.png?raw=true)
+* ChatApp SPA
+!["ChatApp SPA"](https://github.com/sddanila/ChattyApp/blob/master/docs/chattyAppGiphy.gif?raw=true)

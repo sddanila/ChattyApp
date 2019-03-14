@@ -3,8 +3,6 @@ import ChatBar from './ChatBar.jsx';
 import Messages from './Messages.jsx';
 import NavBar from './NavBar.jsx';
 import data from './Messages.json';
-import {generateRandomId} from '../utils.js';
-import { IncomingMessage } from 'http';
 import { isNumber } from 'util';
 import {isUrl} from '../utils.js';
 import {checkImage} from '../utils.js';
@@ -21,29 +19,12 @@ class App extends Component {
     });
     
     this.componentDidMount = this.componentDidMount.bind(this);
-    // this.addNewMessage = this.addNewMessage.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.addCurrentUser = this.addCurrentUser.bind(this);
     this.sendCurrentUser = this.sendCurrentUser.bind(this);
   }
-  // componentDidMount(){
-  //   console.log("componentDidMount <App/>")
-  //   setTimeout(() => {
-  //     console.log("Simulating incoming message");
-  //     console.log(this);
-  //     // Add a new message to the list of messages in the data store
-  //     const newMessage = {id: generateRandomId(), type: 'incomingMessage', username: "Michelle", content: "Hello there!"};
-  //     const newMessages = this.state.messages.concat(newMessage)
-  //     // Update the state of the app component.
-  //     // Calling setState will trigger a call to render() in App and all child components.
-  //     this.setState({messages: newMessages}, () => {
-  //       console.log('msg', this.state.messages);  
-  //     })
-      
-  //   }, 3000);
-  // }
 
-  
+  // HANDLE OPEN AND INCOMING DATA
   componentDidMount(){
     const parent = this;
     socket.onopen = function(event) {
@@ -76,6 +57,7 @@ class App extends Component {
     }
   }
 
+  // SEND MESSAGE CONDITIONALLY BASED ON TYPE TO SERVER
   sendMessage(msg){
     let message = {};
     if(isUrl(msg) && checkImage(msg)){
@@ -94,28 +76,19 @@ class App extends Component {
     socket.send(JSON.stringify(message));
   }
 
+  // ADD CURRENT USER TO APP.STATE
   addCurrentUser(name){
     this.setState({currentUser: name});
   }
 
+  // SEND THE INFO ABOUT THE CURRENT USER TO SERVER
   sendCurrentUser(newName){
     const message = {
       type: 'postNotification',
       content: `${this.state.currentUser} has changed their name to ${newName}`
     }
     socket.send(JSON.stringify(message));
-  }
-  // addNewMessage(msg){
-  //   const oldMessages = this.state.messages;
-  //   const newMessage = {
-  //     type: 'incomingMessage',
-  //     username: this.state.currentUser,
-  //     content: msg
-  //   }
-  //   const newMessages = [...oldMessages, newMessage];
-  //   this.setState({messages: newMessages})
-  // }
-
+  };
   render() {
     return (
       <div>
@@ -128,7 +101,6 @@ class App extends Component {
           addNewMessage={this.addNewMessage} 
           sendMessage={this.sendMessage}/>
       </div>
-
     );
   }
 }
