@@ -3,6 +3,8 @@
 const express = require('express');
 const WebSocket = require('ws');
 const SocketServer = WebSocket.Server;
+const isUrl = require('./utils.js');
+const imageUrl = require('./utils.js');
 
 
 // Set the port to 3001
@@ -27,10 +29,10 @@ wss.on('connection', (ws) => {
   });
   
   ws.on('message', function incoming (data){
-    console.log('hello')
     console.log("THIS IS THE CONSOLE IN THE TERMNAL", data);
+    
 
-   // ws.send('This is where the data should show up');
+  // ws.send('This is where the data should show up');
     wss.clients.forEach(client => {
         console.log(client.readyState);
         console.log(WebSocket.OPEN);

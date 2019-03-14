@@ -6,6 +6,8 @@ import data from './Messages.json';
 import {generateRandomId} from '../utils.js';
 import { IncomingMessage } from 'http';
 import { isNumber } from 'util';
+import {isUrl} from '../utils.js';
+import {checkImage} from '../utils.js';
 
 const socket = new WebSocket('ws://localhost:3001');
 
@@ -52,28 +54,42 @@ class App extends Component {
       let incoming = JSON.parse(event.data);
       if(isNumber(incoming.counter)){
         parent.setState({onlineUsers: incoming.counter});
-      }
-      let oldMessages = parent.state.messages;
-      switch(incoming.type){
-        case "incomingMessage":
-          let newMessages = oldMessages.concat(incoming);
-          parent.setState({messages: newMessages});
-          break;
-        case "incomingNotification":
-          let newNotification = oldMessages.concat(incoming);
-          parent.setState({messages: newNotification});
-          break;
-        default:
-          throw new Error("Uknown event type" + event.type);
+      } else {
+        let oldMessages = parent.state.messages;
+        switch(incoming.type){
+          case "incomingMessage":
+            let newMessages = oldMessages.concat(incoming)
+            parent.setState({messages: newMessages})
+            break;
+          case "incomingNotification":
+            let newNotification = oldMessages.concat(incoming)
+            parent.setState({messages: newNotification})
+            break;
+          case "incomingPicture":
+            let newPicture = oldMessages.concat(incoming)
+            parent.setState({messages: newPicture})
+            break;
+          default:
+            throw new Error("Uknown event type " + event.type);
+        }
       }
     }
   }
 
   sendMessage(msg){
-    const message = {
-      type: 'postMessage',
-      username: this.state.currentUser,
-      content: msg
+    let message = {};
+    if(isUrl(msg) && checkImage(msg)){
+      message = {
+        type: 'postPicture',
+        username: this.state.currentUser,
+        content: msg
+      }
+    } else {
+      message = {
+        type: 'postMessage',
+        username: this.state.currentUser,
+        content: msg
+      }
     }
     socket.send(JSON.stringify(message));
   }

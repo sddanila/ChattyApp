@@ -1,45 +1,54 @@
-React Boilerplate
-=====================
+# ChattyApp Project
 
-A minimal and light dev environment for ReactJS.
+A single page app that allows users to chat with each other in real time. Users can see how many users are online, change their username, their usernames have assigned colors, and can share pictures with each other. 
 
-### Usage
+## Getting Started
 
-Clone the boilerplate and create your own git repo.
+To get started, make sure to connect to http://localhost:3001 and use another browser or an incognito window for the second user.
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+### Prerequisites
 
-Install the dependencies and start the server.
+What you need to install:
 
 ```
-npm install
-npm start
-open http://localhost:3000
-```
-
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
+  "express": "4.16.4",
+  "uuid": "^3.3.2",
+  "ws": "6.2.0"
 
 ```
-npm run lint
-```
 
-### Dependencies
+### Installing
 
-* React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+Clone project and make sure to install all dependencies. 
+
+## Running the tests
+
+No tests added to this project
+
+## Deployment
+
+Please do not deploy
+
+## Versioning
+
+ChattyApp version 1.0.0
+
+## Authors
+
+* Danila Barton-Szabo - initial author
+
+
+## License
+
+This project is licensed under the LHL License
+
+## Acknowledgments
+
+* To all libraries that were used to create this project
+* Mentors who double-checked my code and helped through the tough spots
+* Fellow peers for offering their support
+
+## App Flow
+
+* Chat Page
+!["Chat Page"](https://github.com/sddanila/TinyApp/blob/master/docs/welcome_page.png?raw=true)
