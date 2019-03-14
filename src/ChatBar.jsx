@@ -16,6 +16,7 @@ class ChatBar extends Component{
       if(event.which === 13){
         event.preventDefault();
         let content = event.target.value;
+        this.props.sendCurrentUser(content);
         this.props.addCurrentUser(content);
       }
     }

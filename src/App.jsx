@@ -20,6 +20,7 @@ class App extends Component {
     // this.addNewMessage = this.addNewMessage.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.addCurrentUser = this.addCurrentUser.bind(this);
+    this.sendCurrentUser = this.sendCurrentUser.bind(this);
   }
   // componentDidMount(){
   //   console.log("componentDidMount <App/>")
@@ -45,16 +46,27 @@ class App extends Component {
       console.log('Connected to client');
     };
     socket.onmessage = function(event){
+      console.log(event.data);
+      let incoming = JSON.parse(event.data);
       let oldMessages = parent.state.messages;
-      let newMessage = JSON.parse(event.data);
-      let newMessages = oldMessages.concat(newMessage);
-      parent.setState({messages: newMessages});
+      switch(incoming.type){
+        case "incomingMessage":
+          let newMessages = oldMessages.concat(incoming);
+          parent.setState({messages: newMessages});
+          break;
+        case "incomingNotification":
+          let newNotification = oldMessages.concat(incoming);
+          parent.setState({messages: newNotification});
+          break;
+        default:
+          throw new Error("Uknown event type" + event.type);
+      }
     }
   }
 
   sendMessage(msg){
     const message = {
-      type: 'incomingMessage',
+      type: 'postMessage',
       username: this.state.currentUser,
       content: msg
     }
@@ -65,6 +77,13 @@ class App extends Component {
     this.setState({currentUser: name});
   }
 
+  sendCurrentUser(newName){
+    const message = {
+      type: 'postNotification',
+      content: `${this.state.currentUser} has changed their name to ${newName}`
+    }
+    socket.send(JSON.stringify(message));
+  }
   // addNewMessage(msg){
   //   const oldMessages = this.state.messages;
   //   const newMessage = {
@@ -76,14 +95,17 @@ class App extends Component {
   //   this.setState({messages: newMessages})
   // }
 
-
-
   render() {
     return (
       <div>
         <NavBar />
         <Messages messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser} addCurrentUser={this.addCurrentUser} addNewMessage={this.addNewMessage} sendMessage={this.sendMessage}/>
+        <ChatBar 
+          currentUser={this.state.currentUser} 
+          addCurrentUser={this.addCurrentUser}
+          sendCurrentUser={this.sendCurrentUser}
+          addNewMessage={this.addNewMessage} 
+          sendMessage={this.sendMessage}/>
       </div>
 
     );
