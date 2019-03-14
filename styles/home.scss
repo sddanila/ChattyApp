@@ -2,26 +2,18 @@ h1 {
   color: tomato;
 }
 
-
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
-
-@mixin background($imgpath,$position:0 0,$repeat: no-repeat) {
-  background: {
-      image: url('https://github.com/sddanila/ChattyApp/blob/master/styles/bg.jpg?raw=true');
-      position: $position;
-      repeat: $repeat;
-  }
-}
+@import url('https://fonts.googleapis.com/css?family=Acme');
 
     body {
       background: white;
-      background-image: url('https://github.com/sddanila/ChattyApp/blob/master/styles/bg.jpg?raw=true');
       color: black;
-      font-family: 'Open Sans', sans-serif;
+      font-family: 'Acme', sans-serif;
       font-size: 14px;
       margin: 70px 0;
+      background-image: url('https://github.com/sddanila/ChattyApp/blob/master/styles/bg.jpg?raw=true');
     }
 
     .chatbar {
@@ -58,10 +50,6 @@ h1 {
       padding: 5px;
     }
 
-    .message.evenLine{
-      background-color: lightgrey;
-    }
-
     .message.system {
       font-style: italic;
       padding: 5px 20px;
@@ -81,6 +69,14 @@ h1 {
     .message-username {
       flex: 2;
       font-weight: 700;
+    }
+
+    .notification {
+      display: flex;
+    }
+    .notification-content{
+      padding: 5px 10px;
+      margin-left: auto;
     }
 
     .navbar {

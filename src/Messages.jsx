@@ -17,7 +17,7 @@ export default class Message extends Component {
           )
         } else if (message.type === 'incomingNotification'){
           return (
-            <div className="notification" key={message.id}>
+            <div style={{backgroundColor: alternatingColor}} className="notification" key={message.id}>
               <span className="notification-content"><em>{message.content}</em></span>
             </div>
           )
