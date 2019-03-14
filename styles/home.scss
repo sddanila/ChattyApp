@@ -7,8 +7,17 @@ h1 {
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
 
+@mixin background($imgpath,$position:0 0,$repeat: no-repeat) {
+  background: {
+      image: url('https://github.com/sddanila/ChattyApp/blob/master/styles/bg.jpg?raw=true');
+      position: $position;
+      repeat: $repeat;
+  }
+}
+
     body {
       background: white;
+      background-image: url('https://github.com/sddanila/ChattyApp/blob/master/styles/bg.jpg?raw=true');
       color: black;
       font-family: 'Open Sans', sans-serif;
       font-size: 14px;
